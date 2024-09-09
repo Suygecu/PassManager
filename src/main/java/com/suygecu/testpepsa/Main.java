@@ -1,8 +1,6 @@
 package com.suygecu.testpepsa;
 
-import com.suygecu.testpepsa.EncryptionUtils;
-import com.suygecu.testpepsa.PasswordEntry;
-import com.suygecu.testpepsa.PasswordManager;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,7 +19,7 @@ public class Main  extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        String localFilePath = "passwords.dat"; // Путь к локальному файлу
+        String localFilePath = "passwords.dat";
         this.passwordManager = new PasswordManager(localFilePath);
 
         primaryStage.setTitle("Password Manager");

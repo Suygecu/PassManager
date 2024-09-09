@@ -4,11 +4,10 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.util.Base64;
-import java.util.Date;
 
 public class EncryptionUtils {
     private static final String ALGORITHM = "AES";
-    private static SecretKey key;
+    private static final SecretKey key;
 
     static {
         try{
