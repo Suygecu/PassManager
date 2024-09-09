@@ -19,7 +19,7 @@ public class EncryptionUtils {
 
     private static SecretKey generateKey() throws Exception{
         KeyGenerator keyGenerator = KeyGenerator.getInstance(ALGORITHM);
-        keyGenerator.init(345);
+        keyGenerator.init(256);
         return keyGenerator.generateKey();
     }
 
