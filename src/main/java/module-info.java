@@ -10,6 +10,7 @@ module com.suygecu.testpepsa {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens com.suygecu.testpepsa to javafx.fxml;
     exports com.suygecu.testpepsa;

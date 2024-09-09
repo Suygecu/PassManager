@@ -1,23 +1,21 @@
 package com.suygecu.testpepsa;
 
-
-import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.List;
 
-public class Main  extends Application {
-
+public class InterfaceGui {
     private PasswordManager passwordManager;
     private ListView<String> listView;
     private TextField siteField;
     private TextField usernameField;
     private PasswordField passwordField;
 
-    @Override
     public void start(Stage primaryStage) {
         String localFilePath = "passwords.dat";
         this.passwordManager = new PasswordManager(localFilePath);
@@ -100,6 +98,4 @@ public class Main  extends Application {
         usernameField.clear();
         passwordField.clear();
     }
-
-
 }

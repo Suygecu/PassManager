@@ -16,6 +16,7 @@ repositories {
 
 ext {
     junitVersion = '5.10.2'
+    javafxVersion = '22.0.1'
 }
 
 sourceCompatibility = '22'
@@ -27,7 +28,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.suygecu.testpepsa'
-    mainClass = 'com.suygecu.testpepsa.Main'
+    mainClass = 'com.suygecu.testpepsa.MainApp'
 }
 
 javafx {
@@ -36,6 +37,9 @@ javafx {
 }
 
 dependencies {
+    implementation "org.openjfx:javafx-controls:${javafxVersion}"
+    implementation "org.openjfx:javafx-fxml:${javafxVersion}"
+    implementation "org.openjfx:javafx-web:${javafxVersion}"
     implementation('org.controlsfx:controlsfx:11.2.1')
     implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
         exclude(group: 'org.openjfx')
@@ -53,10 +57,10 @@ dependencies {
         exclude(group: 'org.jetbrains.kotlin')
     }
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "mysql:mysql-connector-java:8.0.32"
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 test {
