@@ -57,8 +57,7 @@ public class TaskManager {
                         task.getDueData());
                 System.out.println();
             }
-        }
-        else System.out.println("Задача не найдена. ");
+        } else System.out.println("Задача не найдена. ");
 
         if (!filteredByDate.isEmpty()) {
             System.out.println("Задачи отсортированы по дате: ");
@@ -69,8 +68,7 @@ public class TaskManager {
                         task.getDueData());
                 System.out.println();
             }
-        }
-        else System.out.println("Задача не найдена. ");
+        } else System.out.println("Задача не найдена. ");
 
 
     }
