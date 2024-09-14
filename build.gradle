@@ -1,10 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.javamodularity.moduleplugin' version '1.8.12'
     id 'org.openjfx.javafxplugin' version '0.0.13'
-    id 'org.beryx.jlink' version '2.25.0'
-    id 'org.jetbrains.kotlin.jvm' version '2.0.20'
 }
 
 group 'com.suygecu'
@@ -28,53 +25,23 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.suygecu.testpepsa'
-    mainClass = 'com.suygecu.testpepsa.MainApp'
+    mainClass = 'com.suygecu.testpepsa.TaskManagerApp'
 }
 
 javafx {
     version = '22.0.1'
-    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing', 'javafx.media']
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 dependencies {
     implementation "org.openjfx:javafx-controls:${javafxVersion}"
     implementation "org.openjfx:javafx-fxml:${javafxVersion}"
-    implementation "org.openjfx:javafx-web:${javafxVersion}"
-    implementation('org.controlsfx:controlsfx:11.2.1')
-    implementation('com.dlsc.formsfx:formsfx-core:11.6.0') {
-        exclude(group: 'org.openjfx')
-    }
-    implementation('net.synedra:validatorfx:0.5.0') {
-        exclude(group: 'org.openjfx')
-    }
-    implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
-    implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
-    implementation('eu.hansolo:tilesfx:21.0.3') {
-        exclude(group: 'org.openjfx')
-    }
-    implementation('com.github.almasb:fxgl:17.3') {
-        exclude(group: 'org.openjfx')
-        exclude(group: 'org.jetbrains.kotlin')
-    }
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "mysql:mysql-connector-java:8.0.32"
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
 
 test {
     useJUnitPlatform()
-}
-
-jlink {
-    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
-    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
-    launcher {
-        name = 'app'
-    }
-}
-
-jlinkZip {
-    group = 'distribution'
 }

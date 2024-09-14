@@ -1,85 +1,100 @@
 package com.suygecu.testpepsa;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TaskManager {
+    private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-    private ArrayList<Task> tasks = new ArrayList<>();
+    // Метод для загрузки всех задач из базы данных в ObservableList
+    public ObservableList<Task> getObservableTasks() {
+        return tasks;
+    }
 
-
+    // Метод для добавления задачи в список и базу данных
     public void addTask(Task task) {
         tasks.add(task);
+        saveTaskToDatabase(task);
     }
 
-    public void removeTask(Task task) {
-        if (tasks.contains(task)) {
-            tasks.remove(task);
-        } else System.out.println("Задача отсутствует. ");
+    // Метод для сохранения задачи в базу данных
+    private void saveTaskToDatabase(Task task) {
+        String insertSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
 
-    }
-
-    public List<Task> filterTaskByDate(LocalDate date) {
-        List<Task> filterTask = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.getDueData().equals(date)) {
-                filterTask.add(task);
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(2, task.getDescription());
+            if (task.getDate() != null) {
+                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
+            } else {
+                preparedStatement.setNull(3, java.sql.Types.DATE);
             }
 
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return filterTask;
-
     }
 
-    public List<Task> filterTaskByTitle(String title) {
-        List<Task> filteredTasksByTitle = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.getTitle().contains(title)) {
-                filteredTasksByTitle.add(task);
-            }
+    // Метод для удаления всех задач из базы данных и списка
+    public void clearAllTasks() {
+        tasks.clear();
+        String clearSQL = "DELETE FROM tasks";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(clearSQL)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        return filteredTasksByTitle;
     }
 
-    public void viewingTaskFilteredTasks(String title, LocalDate date) {
-        List<Task> filteredByTitle = filterTaskByTitle(title);
-        List<Task> filteredByDate = filterTaskByDate(date);
+    // Метод для загрузки всех задач из базы данных в ObservableList
+    public void loadTasksFromDatabase() {
+        String selectSQL = "SELECT id, title, description, date FROM tasks";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-        if (!filteredByTitle.isEmpty()) {
-            System.out.println("Задачи отсортированы по заголовку: ");
+            tasks.clear(); // очищаем перед добавлением из базы
+            while (resultSet.next()) {
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                LocalDate date = resultSet.getDate("date") != null
+                        ? resultSet.getDate("date").toLocalDate() : null;
 
-            for (Task task : filteredByTitle) {
-                System.out.printf("Title: %-20s | Description: %-25s | Date: %s",
-                        task.getTitle(),
-                        task.getDescription(),
-                        task.getDueData());
-                System.out.println();
+                Task task = new Task(title, description, date);
+                tasks.add(task);
             }
-        } else System.out.println("Задача не найдена. ");
-
-        if (!filteredByDate.isEmpty()) {
-            System.out.println("Задачи отсортированы по дате: ");
-            for (Task task : filteredByDate) {
-                System.out.printf("Title: %-20s | Description: %-25s | Date: %s",
-                        task.getTitle(),
-                        task.getDescription(),
-                        task.getDueData());
-                System.out.println();
-            }
-        } else System.out.println("Задача не найдена. ");
-
-
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void viewingTask() {
-        for (Task task : tasks) {
-            System.out.printf("Title: %-20s | Description: %-25s | Date: %s",
-                    task.getTitle(),
-                    task.getDescription(),
-                    task.getDueData());
-            System.out.println();
+    // Метод для обновления существующей задачи в базе данных
+    public void updateTaskInDatabase(Task task) {
+        String updateSQL = "UPDATE tasks SET title = ?, description = ?, date = ? WHERE id = ?";
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateSQL)) {
+
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(2, task.getDescription());
+            if (task.getDate() != null) {
+                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
+            } else {
+                preparedStatement.setNull(3, java.sql.Types.DATE);
+            }
+            preparedStatement.setInt(4, task.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
