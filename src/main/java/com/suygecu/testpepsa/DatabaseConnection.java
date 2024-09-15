@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     private static final String DB_URL = "jdbc:mysql://localhost:3306/task_manager";
-    private static final String USER = "root";  // Заменить на твое имя пользователя MySQL
+    private static final String USER = "root";
     private static final String PASSWORD = "vell123009";
 
     public static Connection getConnection() {

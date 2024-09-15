@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="funny">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/DatabaseConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="big update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/TaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/TaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/TaskMangerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/TaskMangerApp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +284,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726180793464</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="big update">
+      <option name="closed" value="true" />
+      <created>1726336162547</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726336162547</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -314,7 +315,8 @@
     <MESSAGE value="My new password manager" />
     <MESSAGE value="new pet project TaskManager" />
     <MESSAGE value="funny" />
-    <option name="LAST_COMMIT_MESSAGE" value="funny" />
+    <MESSAGE value="big update" />
+    <option name="LAST_COMMIT_MESSAGE" value="big update" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TestPepsa$TaskMangerApp.ic" NAME="TaskMangerApp Coverage Results" MODIFIED="1726179129038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

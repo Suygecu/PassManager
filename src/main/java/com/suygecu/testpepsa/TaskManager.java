@@ -12,18 +12,18 @@ import java.time.LocalDate;
 public class TaskManager {
     private ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-    // Метод для загрузки всех задач из базы данных в ObservableList
+
     public ObservableList<Task> getObservableTasks() {
         return tasks;
     }
 
-    // Метод для добавления задачи в список и базу данных
+
     public void addTask(Task task) {
         tasks.add(task);
         saveTaskToDatabase(task);
     }
 
-    // Метод для сохранения задачи в базу данных
+
     private void saveTaskToDatabase(Task task) {
         String insertSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -43,8 +43,8 @@ public class TaskManager {
         }
     }
 
-    // Метод для удаления всех задач из базы данных и списка
-    public void clearAllTasks() {
+
+     public void clearAllTasks() {
         tasks.clear();
         String clearSQL = "DELETE FROM tasks";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -55,7 +55,9 @@ public class TaskManager {
         }
     }
 
-    // Метод для загрузки всех задач из базы данных в ObservableList
+
+
+
     public void loadTasksFromDatabase() {
         String selectSQL = "SELECT id, title, description, date FROM tasks";
         try (Connection connection = DatabaseConnection.getConnection();
@@ -77,7 +79,7 @@ public class TaskManager {
         }
     }
 
-    // Метод для обновления существующей задачи в базе данных
+
     public void updateTaskInDatabase(Task task) {
         String updateSQL = "UPDATE tasks SET title = ?, description = ?, date = ? WHERE id = ?";
         try (Connection connection = DatabaseConnection.getConnection();

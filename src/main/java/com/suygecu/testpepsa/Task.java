@@ -8,12 +8,12 @@ public class Task {
     private String description;
     private LocalDate date;
 
-    // Конструктор для новой задачи без id
+
     public Task(String title, String description, LocalDate date) {
-        this(-1, title, description, date); // id будет -1 для новых задач
+        this(-1, title, description, date);
     }
 
-    // Конструктор с id для загрузки задач из базы данных
+
     public Task(int id, String title, String description, LocalDate date) {
         this.id = id;
         this.title = title;
@@ -21,7 +21,7 @@ public class Task {
         this.date = date;
     }
 
-    // Геттеры и сеттеры
+
     public int getId() {
         return id;
     }
