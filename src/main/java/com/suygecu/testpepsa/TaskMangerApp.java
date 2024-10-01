@@ -18,6 +18,7 @@ import java.time.LocalDate;
 public class TaskMangerApp extends Application {
 
 
+
     private TaskManager taskManager = new TaskManager();
 
 
@@ -87,30 +88,6 @@ public class TaskMangerApp extends Application {
 
     }
 
-/*
-    private void saveAllTasksToDatabase() {
-        String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
-
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertTaskSQL)) {
-
-            for (Task task : taskManager.getObservableTasks()) {
-                preparedStatement.setString(1, task.getTitle());
-                preparedStatement.setString(2, task.getDescription());
-                if (task.getDate() != null) {
-                    preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
-                } else {
-                    preparedStatement.setNull(3, java.sql.Types.DATE);
-                }
-
-                preparedStatement.executeUpdate();
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Ошибка", "Не удалось сохранить задачи в базу данных.");
-        }
-    }*/
 
 
     private void loadTasksFromDatabase() {
@@ -127,7 +104,11 @@ public class TaskMangerApp extends Application {
                         ? resultSet.getDate("date").toLocalDate() : null;
 
                 Task task = new Task(title, description, date);
-                taskManager.addTask(task);
+
+                if(!taskManager.getObservableTasks().contains(task)){
+                    taskManager.addTask(task);
+                }
+
             }
 
         } catch (SQLException e) {
@@ -138,6 +119,7 @@ public class TaskMangerApp extends Application {
 
 
     private void openEditTaskWindow(Task task) {
+
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Редактировать задачу");
@@ -178,6 +160,7 @@ public class TaskMangerApp extends Application {
                 task.setDescription(newDescription);
                 task.setDate(newDate);
 
+                updateTaskInDatabase(task);
 
                 taskListView.setItems(taskManager.getObservableTasks());
                 showAlert("Задача обновлена", "Задача: " + newTitle + "\nОписание: " + newDescription);
@@ -266,6 +249,7 @@ public class TaskMangerApp extends Application {
 
 
     private void saveNewTaskToDatabase(Task task) {
+        System.out.println("Сохраняем новую задачу в базу данных: " + task);
         String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
@@ -284,6 +268,31 @@ public class TaskMangerApp extends Application {
         } catch (SQLException e) {
             e.printStackTrace();
             showAlert("Ошибка", "Не удалось сохранить задачу в базу данных.");
+        }
+    }
+    private void updateTaskInDatabase(Task task) {
+
+        System.out.println("Обновляем задачу в базе данных: " + task);
+        String updateTaskSQL = "UPDATE tasks SET title = ?, description = ?, date = ? WHERE id = ?";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(updateTaskSQL)) {
+
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(2, task.getDescription());
+            if (task.getDate() != null) {
+                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
+            } else {
+                preparedStatement.setNull(3, java.sql.Types.DATE);
+            }
+
+            preparedStatement.setInt(4, task.getId()); // Предполагается, что у Task есть поле id
+
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Ошибка", "Не удалось обновить задачу в базе данных.");
         }
     }
 }
