@@ -85,11 +85,9 @@ public class TaskMangerApp extends Application {
         primaryStage.setTitle("Мой задачник");
         primaryStage.show();
 
-
-        primaryStage.setOnCloseRequest(windowEvent -> saveAllTasksToDatabase());
     }
 
-
+/*
     private void saveAllTasksToDatabase() {
         String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
 
@@ -112,7 +110,7 @@ public class TaskMangerApp extends Application {
             e.printStackTrace();
             showAlert("Ошибка", "Не удалось сохранить задачи в базу данных.");
         }
-    }
+    }*/
 
 
     private void loadTasksFromDatabase() {
