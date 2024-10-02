@@ -1,4 +1,4 @@
-package com.suygecu.testpepsa;
+package com.suygecu.testpepsa.client;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,15 +9,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class TaskMangerApp extends Application {
+public class TaskMangerApp extends Application implements Runnable {
 
-
+    private ClientHandler clientHandler;
+    private Socket socket;
 
     private TaskManager taskManager = new TaskManager();
 
@@ -35,6 +38,17 @@ public class TaskMangerApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        try{
+            socket = new Socket("127.0.0.1", 1488);
+            clientHandler = new ClientHandler(socket);
+
+            System.out.println("Соединение с сервером установлено.");
+
+        }catch (IOException e){
+            e.printStackTrace();
+            showAlert("Ошибка", "Не удалось подключится к серверу");
+        }
 
 
         loadTasksFromDatabase();
@@ -74,7 +88,7 @@ public class TaskMangerApp extends Application {
         });
 
 
-        button.setOnAction((actionEvent -> openAddTaskWindow()));
+        button.setOnAction((actionEvent -> openAddTaskWindow(clientHandler)));
 
 
         VBox layout = new VBox(5);
@@ -146,28 +160,6 @@ public class TaskMangerApp extends Application {
         gridPane.add(datePicker, 1, 2);
 
 
-        submitButton.setOnAction(e -> {
-            String newTitle = taskNameField.getText();
-            String newDescription = taskDescriptionField.getText();
-            LocalDate newDate = datePicker.getValue();
-
-
-            if (newTitle.isEmpty() || newDescription.isEmpty()) {
-                showAlert("Ошибка", "Пожалуйста, заполните все поля");
-            } else {
-
-                task.setTitle(newTitle);
-                task.setDescription(newDescription);
-                task.setDate(newDate);
-
-                updateTaskInDatabase(task);
-
-                taskListView.setItems(taskManager.getObservableTasks());
-                showAlert("Задача обновлена", "Задача: " + newTitle + "\nОписание: " + newDescription);
-                window.close();
-            }
-        });
-
         VBox dialogLayout = new VBox(10);
         dialogLayout.getChildren().addAll(gridPane, submitButton);
 
@@ -177,7 +169,7 @@ public class TaskMangerApp extends Application {
     }
 
 
-    private void openAddTaskWindow() {
+    private void openAddTaskWindow(ClientHandler clientHandler) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Добавить новую задачу");
@@ -215,6 +207,7 @@ public class TaskMangerApp extends Application {
 
 
         submitButton.setOnAction(e -> {
+
             String taskName = taskNameField.getText();
             String taskDescription = taskDescriptionField.getText();
             LocalDate taskDate = datePicker.getValue();
@@ -225,16 +218,20 @@ public class TaskMangerApp extends Application {
             } else {
 
                 Task newTask = new Task(taskName, taskDescription, taskDate);
-                taskManager.addTask(newTask);
-                taskListView.setItems(taskManager.getObservableTasks());
+
+                    try {
+                        clientHandler.sendTask(newTask);
+                        taskManager.addTask(newTask);
+                        taskListView.setItems(taskManager.getObservableTasks());
 
 
-                saveNewTaskToDatabase(newTask);
-
-
-                showAlert("Задача добавлена", "Задача: " + taskName + "\nОписание: " + taskDescription);
-                window.close();
-            }
+                        showAlert("Задача добалена", "Задача: " + taskName + "\nОписание: " + taskDescription);
+                        window.close();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        showAlert("Ошибка", "Не удалось отправить задачу на сервер");
+                    }
+                }
         });
 
 
@@ -248,28 +245,7 @@ public class TaskMangerApp extends Application {
     }
 
 
-    private void saveNewTaskToDatabase(Task task) {
-        System.out.println("Сохраняем новую задачу в базу данных: " + task);
-        String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertTaskSQL)) {
-
-            preparedStatement.setString(1, task.getTitle());
-            preparedStatement.setString(2, task.getDescription());
-            if (task.getDate() != null) {
-                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
-            } else {
-                preparedStatement.setNull(3, java.sql.Types.DATE);
-            }
-
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            showAlert("Ошибка", "Не удалось сохранить задачу в базу данных.");
-        }
-    }
     private void updateTaskInDatabase(Task task) {
 
         System.out.println("Обновляем задачу в базе данных: " + task);
@@ -294,5 +270,10 @@ public class TaskMangerApp extends Application {
             e.printStackTrace();
             showAlert("Ошибка", "Не удалось обновить задачу в базе данных.");
         }
+    }
+
+    @Override
+    public void run() {
+
     }
 }

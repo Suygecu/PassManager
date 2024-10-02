@@ -1,4 +1,4 @@
-package com.suygecu.testpepsa;
+package com.suygecu.testpepsa.client;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,4 +1,4 @@
-package com.suygecu.testpepsa;
+package com.suygecu.testpepsa.client;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
