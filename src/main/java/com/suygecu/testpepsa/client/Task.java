@@ -1,10 +1,9 @@
 package com.suygecu.testpepsa.client;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Task implements Serializable {
+public class Task{
 
 
     private int id;
@@ -32,12 +31,13 @@ public class Task implements Serializable {
         this(-1, title, description, date);
     }
 
-    private static final long serialVersionUID = 1l;
+
+
     public Task(int id, String title, String description, LocalDate date) {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.date = date;
+        this.date = date !=null ? date : LocalDate.now();
     }
 
 

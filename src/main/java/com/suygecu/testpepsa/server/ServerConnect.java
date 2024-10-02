@@ -2,11 +2,11 @@ package com.suygecu.testpepsa.server;
 
 import com.suygecu.testpepsa.client.DatabaseConnection;
 import com.suygecu.testpepsa.client.Task;
-import javafx.scene.control.Alert;
+import com.suygecu.testpepsa.client.TaskPacket;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
@@ -17,7 +17,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class ServerConnect {
 
-    private static BlockingDeque<Task> taskQueue = new LinkedBlockingDeque<>();
+    public static BlockingDeque<Task> taskQueue = new LinkedBlockingDeque<>();
 
     private static boolean isRunningServer = true;
 
@@ -26,39 +26,42 @@ public class ServerConnect {
 
         new Thread(ServerConnect::processQueue).start();
 
-        try (ServerSocket serverSocket = new ServerSocket(1488)) {System.out.println("Сервер запущен чочел тварь ");
-            while (isRunningServer){
+        try (ServerSocket serverSocket = new ServerSocket(1488)) {
+            System.out.println("Сервер запущен чочел тварь ");
+            while (isRunningServer) {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     System.out.println("Клиент подключен");
 
                     new Thread(() -> handleClient(clientSocket)).start();
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
 
-
-}
+            }
         }
 
     }
 
     private static void handleClient(Socket clientSocket) {
-        try (ObjectInputStream inputClientStream = new ObjectInputStream(clientSocket.getInputStream());
-             ObjectOutputStream outputStreamClient = new ObjectOutputStream(clientSocket.getOutputStream())) {
-while (true){
+        try (DataInputStream inputClientStream = new DataInputStream(clientSocket.getInputStream());
+             DataOutputStream outputStreamClient = new DataOutputStream(clientSocket.getOutputStream())) {
+            while (true) {
 
-    Task task = (Task) inputClientStream.readObject();
-    System.out.println("Получена задача: " + task);
+                TaskPacket packet = new TaskPacket();
+                packet.readPacket(inputClientStream);
 
-    taskQueue.put(task);
+                System.out.println("Получена задача: " + packet);
+                packet.processPacket();
 
+                System.out.println("Отправляем подтверждение клиенту");
 
-    outputStreamClient.writeObject("Задача сохранена в базу данных  " + task);
-    outputStreamClient.flush();
-}
-        } catch (ClassNotFoundException | InterruptedException | IOException e) {
+                packet.writePacket(outputStreamClient);
+                outputStreamClient.flush();
+                System.out.println("Подтверждение отправлено клиенту");
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -66,21 +69,20 @@ while (true){
     private static void processQueue() {
         while (true) {
             try {
-                Task task = ServerConnect.taskQueue.take();
-                System.out.println("Обработка задачи: " + task);
-                saveNewTaskToDatabase(task);
 
+                Task task = taskQueue.take();
+                System.out.println("Обрабатываем задачу: " + task);
+
+
+                saveNewTaskToDatabase(task);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
-
-
     }
 
 
-    private static void saveNewTaskToDatabase(Task task) {
+    public static void saveNewTaskToDatabase(Task task) {
         System.out.println("Сохраняем новую задачу в базу данных: " + task);
         String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
 
@@ -99,17 +101,10 @@ while (true){
 
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Ошибка", "Не удалось сохранить задачу в базу данных.");
         }
     }
 
-    private static void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 }
 
 
