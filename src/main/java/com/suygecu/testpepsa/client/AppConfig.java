@@ -20,6 +20,7 @@ public class AppConfig {
         dataSource.setUrl("jdbc:mysql://localhost:3306/task_manager");
         dataSource.setUsername("root");
         dataSource.setPassword("vell123009");
-        return dataSource;
+        System.out.println("Подключение к базе данных успешно");
+        return  dataSource;
     }
 }

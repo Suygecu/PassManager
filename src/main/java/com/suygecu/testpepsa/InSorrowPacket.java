@@ -10,7 +10,7 @@ public abstract class InSorrowPacket {
 
     public abstract void readPacket(DataInput input) throws IOException;
 
-    public abstract void processPacket();
+    public abstract String processPacket();
 
 
 }

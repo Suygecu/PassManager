@@ -67,7 +67,9 @@ public class TaskManagerApp {
     }
 
     public void saveNewTaskToDatabase(Task task) throws SQLException {
+
         try (Connection connection = dataSource.getConnection()) {
+
             try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_TASK_SQL)) {
                 preparedStatement.setString(1, task.getTitle());
                 preparedStatement.setString(2, task.getDescription());
@@ -77,6 +79,7 @@ public class TaskManagerApp {
                     preparedStatement.setNull(3, Types.DATE);
                 }
                 preparedStatement.executeUpdate();
+                System.out.println("Сохраняем новую задачу в базу данных: " + task);
             }
         } catch (SQLException e) {
             e.printStackTrace();

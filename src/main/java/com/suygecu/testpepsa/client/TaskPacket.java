@@ -63,11 +63,12 @@ public class TaskPacket extends InSorrowPacket {
         title = input.readUTF();
         description = input.readUTF();
         date = input.readUTF();
+        System.out.println("Прочитан пакет  " + toString());
     }
 
 
     @Override
-    public void processPacket() {
+    public String processPacket() {
         TaskManagerApp taskManagerApp = context.getBean(TaskManagerApp.class);
         Task task = new Task(title, description, LocalDate.parse(date));
         try {
@@ -75,8 +76,12 @@ public class TaskPacket extends InSorrowPacket {
             System.out.println("Задача добавлена в очередь: " + task);
 
             taskManagerApp.saveNewTaskToDatabase(task);
+            System.out.println("Задача сохранена в базу данных: " + task);
+
+            return "Задача успешно обработана и добавлена в базу данных.";
         } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
+            return "Ошибка при обработке задачи: " + e.getMessage();
         }
     }
 

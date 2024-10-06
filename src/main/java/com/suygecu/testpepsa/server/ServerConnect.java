@@ -47,12 +47,12 @@ public class ServerConnect {
             packet.readPacket(inputClientStream);
 
             System.out.println("Получена задача: " + packet);
-            packet.processPacket();
+            String result = packet.processPacket();
 
             // Отправляем подтверждение клиенту
-            outputStreamClient.writeUTF("Задача успешно получена и обработана.");
+            outputStreamClient.writeUTF(result);
             outputStreamClient.flush();
-            System.out.println("Ответ клиенту отправлен.");
+            System.out.println("Ответ клиенту отправлен: " + result);
 
         } catch (IOException e) {
             e.printStackTrace();

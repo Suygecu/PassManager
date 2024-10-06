@@ -4,25 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="Fixed the constant reconnection to the database after adding a task. Moved the socket connection to a separate method">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/SpringJavaFXApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskManagerApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="upgrade notification">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/DatabaseConnection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskMangerApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/InSorrowPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/InSorrowPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/AppConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/AppConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskManagerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskManagerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskPacket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/server/ServerConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/server/ServerConnect.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +244,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -406,7 +394,7 @@
       <workItem from="1728212772427" duration="11395000" />
       <workItem from="1728226422652" duration="3037000" />
       <workItem from="1728247413084" duration="1038000" />
-      <workItem from="1728248459529" duration="5348000" />
+      <workItem from="1728248459529" duration="6711000" />
     </task>
     <task id="LOCAL-00001" summary="My new password manager">
       <option name="closed" value="true" />
@@ -496,7 +484,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728229062691</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="(Spring Boot integration">
+      <option name="closed" value="true" />
+      <created>1728253969581</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1728253969581</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -527,7 +523,9 @@
     <MESSAGE value="create client vs server" />
     <MESSAGE value="Sensai, I traded my sleep for this project. I'm angry, everything annoys me, but somehow I managed to get it going. Sorry for being stupid" />
     <MESSAGE value="Fixed the constant reconnection to the database after adding a task. Moved the socket connection to a separate method" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the constant reconnection to the database after adding a task. Moved the socket connection to a separate method" />
+    <MESSAGE value="(Spring Boot integration" />
+    <MESSAGE value="upgrade notification" />
+    <option name="LAST_COMMIT_MESSAGE" value="upgrade notification" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
