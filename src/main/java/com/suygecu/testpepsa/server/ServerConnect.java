@@ -1,5 +1,6 @@
 package com.suygecu.testpepsa.server;
 
+import com.suygecu.testpepsa.client.DatabaseConnection;
 import com.suygecu.testpepsa.client.TaskPacket;
 
 import java.io.DataInputStream;
@@ -7,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLException;
 
 public class ServerConnect {
 
@@ -14,8 +16,8 @@ public class ServerConnect {
 
     private static boolean isRunningServer = true;
 
-    public static void main(String[] args) throws IOException {
-
+    public static void main(String[] args) throws IOException, SQLException {
+        DatabaseConnection.getInstance().getConnection();
             try (ServerSocket serverSocket = new ServerSocket(1488)) {
                 System.out.println("Сервер запущен и ожидает подключения клиентов...");
                 while (isRunningServer) {
