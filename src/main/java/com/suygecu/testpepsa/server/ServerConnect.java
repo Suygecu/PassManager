@@ -16,8 +16,15 @@ public class ServerConnect {
 
     private static boolean isRunningServer = true;
 
-    public static void main(String[] args) throws IOException, SQLException {
-        DatabaseConnection.getInstance().getConnection();
+    public static void main(String[] args) throws SQLException, IOException {
+        serverConnect();
+    }
+
+
+
+
+    public static void serverConnect ()throws IOException, SQLException {
+            DatabaseConnection.getInstance().getConnection();
             try (ServerSocket serverSocket = new ServerSocket(1488)) {
                 System.out.println("Сервер запущен и ожидает подключения клиентов...");
                 while (isRunningServer) {

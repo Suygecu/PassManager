@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="Fixed the constant reconnection to the database after adding a task. Moved the socket connection to a separate method">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskMangerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskMangerApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/server/ServerConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/server/ServerConnect.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -277,7 +278,7 @@
       <workItem from="1727973053306" duration="2361000" />
       <workItem from="1727982514524" duration="33000" />
       <workItem from="1728212772427" duration="11395000" />
-      <workItem from="1728226422652" duration="2495000" />
+      <workItem from="1728226422652" duration="3037000" />
     </task>
     <task id="LOCAL-00001" summary="My new password manager">
       <option name="closed" value="true" />
@@ -359,7 +360,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728228036771</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Fixed the constant reconnection to the database after adding a task. Moved the socket connection to a separate method">
+      <option name="closed" value="true" />
+      <created>1728229062691</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1728229062691</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
