@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Task{
 
 
-    private int id;
+    private long id;
     private String title;
     private String description;
     private LocalDate date;
@@ -55,7 +55,7 @@ public class Task{
         return date;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -1,41 +1,23 @@
 package com.suygecu.testpepsa.client;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 public class ClientHandler {
-    private Socket clientSocket;
-    private DataOutputStream outputStream;
-    private DataInputStream inputStream;
+
+
     public static ClientHandler clientHandler;
+    private final DataOutputStream outputStream;
+    private final DataInputStream inputStream;
+    private final Socket clientSocket;
 
-
-
-
-
-
-    public ClientHandler(Socket clientSocket) throws Exception {
-        this.outputStream = new DataOutputStream(clientSocket.getOutputStream());
-        this.inputStream = new DataInputStream(clientSocket.getInputStream());
-        this.clientSocket = clientSocket;
+    public ClientHandler(Socket socket) throws Exception {
+        this.outputStream = new DataOutputStream(socket.getOutputStream());
+        this.inputStream = new DataInputStream(socket.getInputStream());
+        this.clientSocket = socket;
     }
-
-
-
-    public static  ClientHandler connectToServer() throws Exception {
-        try {
-            Socket socket = new Socket("127.0.0.1", 1488);
-            clientHandler = new ClientHandler(socket);
-
-            System.out.println("Соединение с сервером установлено.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            TaskMangerApp.showAlert("Ошибка", "Не удалось подключится к серверу");
-        }
-        return clientHandler;
-    }
-
     public void sendTask(Task task) throws IOException {
         try {
 
@@ -48,7 +30,8 @@ public class ClientHandler {
                 outputStream.writeUTF("");
             }
             outputStream.flush();
-            System.out.println("Ответ от сервера: " + "\n" + "Задача получена: " + task);
+            String response = inputStream.readUTF();
+            System.out.println("Ответ от сервера: " + response + "\n" + "Задача получена: " + task);
 
 
 
@@ -56,6 +39,22 @@ public class ClientHandler {
             e.printStackTrace();
         }
     }
+    public static  ClientHandler connectToServer() throws Exception {
+        try {
+            Socket socket = new Socket("127.0.0.1", 1488);
+            clientHandler = new ClientHandler(socket);
+
+            System.out.println("Соединение с сервером установлено.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            TaskManagerApp.showAlert("Ошибка", "Не удалось подключится к серверу");
+        }
+        return clientHandler;
+    }
+
+
+
     }
 
 
