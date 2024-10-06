@@ -11,7 +11,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,16 +19,13 @@ import java.time.LocalDate;
 
 public class TaskMangerApp extends Application {
 
-    private ClientHandler clientHandler;
-    private Socket socket;
-
     private TaskManager taskManager = new TaskManager();
 
 
     private ListView<Task> taskListView;
 
 
-    private void showAlert(String title, String message) {
+    public static void showAlert(String title, String message) {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(title);
@@ -46,19 +42,9 @@ public class TaskMangerApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        try {
-            socket = new Socket("127.0.0.1", 1488);
-            clientHandler = new ClientHandler(socket);
 
-            System.out.println("Соединение с сервером установлено.");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Ошибка", "Не удалось подключится к серверу");
-        }
-
-
-        loadTasksFromDatabase();
+        ClientHandler.connectToServer();
+        loadTasksFromDatabase(DatabaseConnection.getConnection());
 
 
         Button button = new Button("Добавить задачу");
@@ -95,7 +81,9 @@ public class TaskMangerApp extends Application {
         });
 
 
-        button.setOnAction((actionEvent -> openAddTaskWindow(clientHandler)));
+        button.setOnAction((actionEvent -> {
+            openAddTaskWindow();
+        }));
 
 
         VBox layout = new VBox(5);
@@ -110,11 +98,10 @@ public class TaskMangerApp extends Application {
     }
 
 
-    private void loadTasksFromDatabase() {
+    private void loadTasksFromDatabase(Connection connection) {
         String selectTasksSQL = "SELECT title, description, date FROM tasks";
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(selectTasksSQL);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectTasksSQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -135,6 +122,29 @@ public class TaskMangerApp extends Application {
             e.printStackTrace();
             showAlert("Ошибка", "Не удалось загрузить задачи из базы данных.");
         }
+    }
+    public static void saveNewTaskToDatabase(Task task, Connection connection) throws SQLException {
+        System.out.println("Сохраняем новую задачу в базу данных: " + task);
+        String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertTaskSQL);
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(2, task.getDescription());
+            if (task.getDate() != null) {
+                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
+            } else {
+                preparedStatement.setNull(3, java.sql.Types.DATE);
+            }
+
+            preparedStatement.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -177,7 +187,7 @@ public class TaskMangerApp extends Application {
 
 
 
-        private void openAddTaskWindow(ClientHandler clientHandler) {
+        private void openAddTaskWindow() {
             Stage window = new Stage();
             window.initModality(Modality.APPLICATION_MODAL);
             window.setTitle("Добавить новую задачу");
@@ -227,7 +237,7 @@ public class TaskMangerApp extends Application {
 
                     new Thread(() -> {
                         try {
-                            clientHandler.sendTask(newTask);
+                            ClientHandler.clientHandler.sendTask(newTask);
 
 
                             Platform.runLater(() -> {

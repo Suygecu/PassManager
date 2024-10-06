@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="create client vs server">
-      <change afterPath="$PROJECT_DIR$/hs_err_pid20992.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hs_err_pid23500.log" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/InSorrowPacket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskPacket.java" afterDir="false" />
+    <list default="true" id="99c6c576-80d7-439d-8c90-93507a23fdc6" name="Changes" comment="Sensai, I traded my sleep for this project. I'm angry, everything annoys me, but somehow I managed to get it going. Sorry for being stupid">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqlDataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/DatabaseConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/DatabaseConnection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/Task.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskMangerApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskMangerApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/TaskPacket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/server/ServerConnect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/server/ServerConnect.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,36 +114,47 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.ServerConnect.executor&quot;: &quot;Run&quot;,
-    &quot;Application.TaskMangerApp.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PassManager [build].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PassManager [updateDaemonJvm].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.PassManager [wrapper].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestPepsa [:com.suygecu.testpepsa.HelloApplication.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestPepsa [:com.suygecu.testpepsa.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.TestPepsa [init].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;myproject/task-manager/2024&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "Application.ServerConnect.executor": "Run",
+    "Application.TaskMangerApp.executor": "Run",
+    "Gradle.Download Sources.executor": "Run",
+    "Gradle.PassManager [build].executor": "Run",
+    "Gradle.PassManager [updateDaemonJvm].executor": "Run",
+    "Gradle.PassManager [wrapper].executor": "Run",
+    "Gradle.TestPepsa [:com.suygecu.testpepsa.HelloApplication.main()].executor": "Run",
+    "Gradle.TestPepsa [:com.suygecu.testpepsa.Main.main()].executor": "Run",
+    "Gradle.TestPepsa [init].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "git-widget-placeholder": "myproject/task-manager/2024",
+    "ignore.preview.features.used": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;kotlin-gradle-user-dirs&quot;: [
-      &quot;C:\\Users\\pupsy\\.gradle&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql_aurora",
+      "mysql"
+    ],
+    "kotlin-gradle-user-dirs": [
+      "C:\\Users\\pupsy\\.gradle"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\TestPepsa\src\main\resources" />
@@ -245,11 +257,19 @@
       <list>
         <item itemvalue="Application.TaskMangerApp" />
         <item itemvalue="Application.ServerConnect" />
-        <item itemvalue="Gradle.PassManager [build]" />
         <item itemvalue="Gradle.PassManager [wrapper]" />
         <item itemvalue="Gradle.PassManager [updateDaemonJvm]" />
+        <item itemvalue="Gradle.PassManager [build]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -259,6 +279,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1725882946719</updated>
+      <workItem from="1727972163207" duration="151000" />
+      <workItem from="1727972330728" duration="263000" />
+      <workItem from="1727972667353" duration="42000" />
+      <workItem from="1727972716825" duration="330000" />
+      <workItem from="1727973053306" duration="2361000" />
+      <workItem from="1727982514524" duration="33000" />
+      <workItem from="1728212772427" duration="6912000" />
     </task>
     <task id="LOCAL-00001" summary="My new password manager">
       <option name="closed" value="true" />
@@ -316,8 +343,19 @@
       <option name="project" value="LOCAL" />
       <updated>1727875381085</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Sensai, I traded my sleep for this project. I'm angry, everything annoys me, but somehow I managed to get it going. Sorry for being stupid">
+      <option name="closed" value="true" />
+      <created>1727912198071</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1727912198071</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.ext" />
@@ -342,17 +380,23 @@
     <MESSAGE value="big update" />
     <MESSAGE value=" update" />
     <MESSAGE value="create client vs server" />
-    <option name="LAST_COMMIT_MESSAGE" value="create client vs server" />
+    <MESSAGE value="Sensai, I traded my sleep for this project. I'm angry, everything annoys me, but somehow I managed to get it going. Sorry for being stupid" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sensai, I traded my sleep for this project. I'm angry, everything annoys me, but somehow I managed to get it going. Sorry for being stupid" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.NullPointerException" package="java.lang" />
-          <option name="timeStamp" value="7" />
-        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/suygecu/testpepsa/client/DatabaseConnection.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/TestPepsa$TaskMangerApp.ic" NAME="TaskMangerApp Coverage Results" MODIFIED="1726179129038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

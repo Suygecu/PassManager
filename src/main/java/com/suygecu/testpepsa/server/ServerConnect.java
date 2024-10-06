@@ -10,10 +10,11 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
+
+import static com.suygecu.testpepsa.client.TaskMangerApp.saveNewTaskToDatabase;
 
 public class ServerConnect {
 
@@ -44,6 +45,7 @@ public class ServerConnect {
 
     }
 
+
     private static void handleClient(Socket clientSocket) {
         try (DataInputStream inputClientStream = new DataInputStream(clientSocket.getInputStream());
              DataOutputStream outputStreamClient = new DataOutputStream(clientSocket.getOutputStream())) {
@@ -55,11 +57,10 @@ public class ServerConnect {
                 System.out.println("Получена задача: " + packet);
                 packet.processPacket();
 
-                System.out.println("Отправляем подтверждение клиенту");
 
                 packet.writePacket(outputStreamClient);
                 outputStreamClient.flush();
-                System.out.println("Подтверждение отправлено клиенту");
+                System.out.println("Ответ от клиента, задача получена:" + packet);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -73,36 +74,19 @@ public class ServerConnect {
                 Task task = taskQueue.take();
                 System.out.println("Обрабатываем задачу: " + task);
 
+                Connection connection = DatabaseConnection.getConnection();
+                saveNewTaskToDatabase(task,connection);
 
-                saveNewTaskToDatabase(task);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
     }
 
 
-    public static void saveNewTaskToDatabase(Task task) {
-        System.out.println("Сохраняем новую задачу в базу данных: " + task);
-        String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
 
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertTaskSQL)) {
-
-            preparedStatement.setString(1, task.getTitle());
-            preparedStatement.setString(2, task.getDescription());
-            if (task.getDate() != null) {
-                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
-            } else {
-                preparedStatement.setNull(3, java.sql.Types.DATE);
-            }
-
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 }

@@ -23,9 +23,13 @@ public class TaskPacket extends InSorrowPacket {
     }
 
     public TaskPacket(){
-
+    toString();
     }
 
+    @Override
+    public String toString() {
+        return "Задача: " + title + ", Описание: " + description + ", Дата: " + date;
+    }
 
 
     @Override

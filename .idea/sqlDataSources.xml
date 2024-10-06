@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="b3baab8b-ac86-42b5-9d59-57888b41e41e" name="Aurora MySQL (AWS Wrapper) Mapping">
+      <data-sources db="f6ef4fb4-433e-4470-8c37-a4f4d7876310" />
+    </mapping>
+  </component>
+</project>
