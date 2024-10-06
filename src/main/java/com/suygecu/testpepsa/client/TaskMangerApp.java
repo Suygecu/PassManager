@@ -11,11 +11,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+
 
 public class TaskMangerApp extends Application {
 
@@ -44,7 +42,12 @@ public class TaskMangerApp extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         ClientHandler.connectToServer();
-        loadTasksFromDatabase(DatabaseConnection.getConnection());
+        try {
+            loadTasksFromDatabase();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Ошибка", "Не удалось загрузить задачи при старте приложения.");
+        }
 
 
         Button button = new Button("Добавить задачу");
@@ -98,8 +101,16 @@ public class TaskMangerApp extends Application {
     }
 
 
-    private void loadTasksFromDatabase(Connection connection) {
+    private void loadTasksFromDatabase() throws SQLException {
+        Connection connection = DatabaseConnection.getInstance().getConnection();
+        if (connection == null || connection.isClosed()) {
+            throw new SQLException("Соединение к базе данных не установлено или закрыто.");
+        }
+
+
         String selectTasksSQL = "SELECT title, description, date FROM tasks";
+        System.out.println("Загружаем задачи из базы данных: " + selectTasksSQL);
+
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectTasksSQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -123,18 +134,19 @@ public class TaskMangerApp extends Application {
             showAlert("Ошибка", "Не удалось загрузить задачи из базы данных.");
         }
     }
-    public static void saveNewTaskToDatabase(Task task, Connection connection) throws SQLException {
-        System.out.println("Сохраняем новую задачу в базу данных: " + task);
-        String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
-
+    public static void saveNewTaskToDatabase(Task task) throws SQLException {
+            Connection connection = DatabaseConnection.getInstance().getConnection();
         try {
+            System.out.println("Сохраняем новую задачу в базу данных: " + task);
+            String insertTaskSQL = "INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(insertTaskSQL);
+
             preparedStatement.setString(1, task.getTitle());
             preparedStatement.setString(2, task.getDescription());
             if (task.getDate() != null) {
-                preparedStatement.setDate(3, java.sql.Date.valueOf(task.getDate()));
+                preparedStatement.setDate(3, Date.valueOf(task.getDate()));
             } else {
-                preparedStatement.setNull(3, java.sql.Types.DATE);
+                preparedStatement.setNull(3, Types.DATE);
             }
 
             preparedStatement.executeUpdate();

@@ -1,17 +1,21 @@
 package com.suygecu.testpepsa.client;
 
 import com.suygecu.testpepsa.InSorrowPacket;
-import com.suygecu.testpepsa.server.ServerConnect;
 
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
+
+import static com.suygecu.testpepsa.client.TaskMangerApp.saveNewTaskToDatabase;
 
 public class TaskPacket extends InSorrowPacket {
 
 
-
+    private static BlockingDeque<Task> taskQueue = new LinkedBlockingDeque<>();
     private String title;
     private String description;
     private String date;
@@ -56,9 +60,11 @@ public class TaskPacket extends InSorrowPacket {
     public void processPacket() {
         Task task = new Task(title, description, LocalDate.parse(date));
         try {
-            ServerConnect.taskQueue.put(task);
+            taskQueue.put(task);
             System.out.println("Задача добавлена в очередь: " + task);
-        } catch (InterruptedException e) {
+
+            saveNewTaskToDatabase(task);
+        } catch (InterruptedException | SQLException e) {
             e.printStackTrace();
         }
     }
